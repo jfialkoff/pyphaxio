@@ -1,4 +1,4 @@
 pyphaxio
 ========
 
-Python interface for Phaxio
+Python client for Phaxio fax service.
