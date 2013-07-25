@@ -43,7 +43,7 @@ class PhaxioApi(object):
         print(payload)
         print(files)
         #import ipdb; ipdb.set_trace()
-        r = requests.get(url, params = payload, files = files)
+        r = requests.post(url, params = payload, files = files)
         print('response: %s' % (r.content))
         return r.json()
 
