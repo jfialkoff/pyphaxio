@@ -33,18 +33,9 @@ class PhaxioApi(object):
         for fn_i, fn in enumerate(fns):
             files['filename[%d]' % fn_i] = open(fn, 'rb')
 
-        """
-        if 'string_data' in payload:
-            files['string_data'] = payload.pop('string_data')
-        """
 
         url = '%s/v%d/%s' % (self.BASE_URL, self.VERSION, method)
-        print(url)
-        print(payload)
-        print(files)
-        #import ipdb; ipdb.set_trace()
         r = requests.post(url, params = payload, files = files)
-        print('response: %s' % (r.content))
         return r.json()
 
     def __getattribute__(self, name):
