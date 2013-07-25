@@ -22,7 +22,7 @@ def main():
 
     print('Sending fax')
     r = api.send(to='4141234567',
-        string_data='Hello World!' * 1,
+        string_data='H' * 8000,
         string_data_type='text',
         batch_collision_avoidance=True)
     print('Test %s: %s\n' % (

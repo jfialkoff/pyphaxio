@@ -35,7 +35,7 @@ class PhaxioApi(object):
 
 
         url = '%s/v%d/%s' % (self.BASE_URL, self.VERSION, method)
-        r = requests.post(url, params = payload, files = files)
+        r = requests.post(url, data = payload, files = files)
         return r.json()
 
     def __getattribute__(self, name):
