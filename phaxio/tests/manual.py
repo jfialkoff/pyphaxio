@@ -20,18 +20,25 @@ def main():
 
     api = PhaxioApi(key, secret)
 
-    print('Sending fax')
-    r = api.send(to='4141234567',
-        string_data='H' * 8000,
-        string_data_type='text',
-        batch_collision_avoidance=True)
+    print('Sending long fax to multiple recipients with string data')
+    r = api.send(to=['4141234567', '5141234567', '6151234567'],
+        string_data='Hello World! ' * 8000,
+        string_data_type='text')
+    print('Test %s: %s\n' % (
+        'PASSED' if r['success'] else 'FAILED', r['message']
+    ))
+
+    print('Sending fax with files')
+    llama = os.path.join(os.path.dirname(__file__), 'llama.pdf')
+    alpaca = os.path.join(os.path.dirname(__file__), 'alpaca.pdf')
+    f = open(alpaca, 'rb')
+    r = api.send(to='4141234567', files=(llama, f))
     print('Test %s: %s\n' % (
         'PASSED' if r['success'] else 'FAILED', r['message']
     ))
 
     print('Requesting test receive')
-    fn = os.path.join(os.path.dirname(__file__), 'llama.pdf')
-    r = api.testReceive(filename = fn)
+    r = api.testReceive(files = llama)
     print('Test %s: %s\n' % (
         'PASSED' if r['success'] else 'FAILED', r['message']
     ))
