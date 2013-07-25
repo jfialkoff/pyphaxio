@@ -31,10 +31,12 @@ class PhaxioApi(object):
         if isinstance(fns, basestring): fns = [fns]
         files = {}
         for fn_i, fn in enumerate(fns):
-            files['filename'] = ('file.pdf', open(fn, 'rb'))
+            files['filename[%d]' % fn_i] = open(fn, 'rb')
 
+        """
         if 'string_data' in payload:
             files['string_data'] = payload.pop('string_data')
+        """
 
         url = '%s/v%d/%s' % (self.BASE_URL, self.VERSION, method)
         print(url)
