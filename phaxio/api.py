@@ -1,3 +1,4 @@
+import io
 import requests
 import urllib
 
@@ -25,14 +26,20 @@ class PhaxioApi(object):
         payload = kwargs.copy()
         payload['api_key'] = self.api_key
         payload['api_secret'] = self.api_secret
-        payload = '&'.join(
-            ['%s=%s' % (key, urllib.quote(unicode(val), ''))
-            for key, val in payload.items()]
-        )
-        url = '%s/v%d/%s?%s' % (self.BASE_URL, self.VERSION, method,
-            payload)
+
+        fns = payload.pop('filename', [])
+        if isinstance(fns, basestring): fns = [fns]
+        files = {}
+        for fn_i, fn in enumerate(fns):
+            files['filename'] = ('file.pdf', open(fn, 'rb'))
+
+        url = '%s/v%d/%s' % (self.BASE_URL, self.VERSION, method)
         print(url)
-        r = requests.get(url)
+        print(payload)
+        print(files)
+        #import ipdb; ipdb.set_trace()
+        r = requests.get(url, params = payload, files = files)
+        print('response: %s' % (r.content))
         return r.json()
 
     def __getattribute__(self, name):
