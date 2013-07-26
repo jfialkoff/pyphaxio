@@ -48,7 +48,11 @@ class PhaxioApi(object):
 
         url = '%s/v%d/%s' % (self.BASE_URL, self.VERSION, method)
         r = requests.post(url, data = payload, files = req_files)
-        return r.json()
+        if callable(r.json):
+            return r.json()
+        else:
+            # json isn't callable in old versions of requests
+            return r.json
 
     def __getattribute__(self, name):
         if name in PhaxioApi.__IMPLEMENTED:
