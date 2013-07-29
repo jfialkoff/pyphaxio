@@ -5,7 +5,7 @@ setup(
 
     name = "PyPhaxio",
 
-    version = '0.5',
+    version = '0.6',
 
     packages = find_packages(),
 
