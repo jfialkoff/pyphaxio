@@ -8,7 +8,7 @@ class PhaxioApi(object):
     VERSION = 1
     BASE_URL = 'https://api.phaxio.com'
     __IMPLEMENTED = ('send', 'testReceive', 'attachPhaxCodeToPdf',
-        'createPhaxCode', 'getHostedDocument'
+        'createPhaxCode', 'getHostedDocument', 'faxStatus'
     )
 
     api_key = None

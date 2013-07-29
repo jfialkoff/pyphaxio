@@ -10,13 +10,8 @@ def main():
         "live) service."
     )
 
-    """
     key = raw_input('Enter test API key: ')
     secret = raw_input('Enter secret: ')
-    """
-
-    key = '20df64effed2a34e33afbaf1e40e044384b3fad2'
-    secret = '068460fc06fd7cb6ec0c3678766d91acc03b63b7'
 
     api = PhaxioApi(key, secret)
 
@@ -24,6 +19,7 @@ def main():
     r = api.send(to=['4141234567', '5141234567', '6151234567'],
         string_data='Hello World! ' * 8000,
         string_data_type='text')
+    faxId = r.get('faxId')
     print('Test %s: %s\n' % (
         'PASSED' if r['success'] else 'FAILED', r['message']
     ))
@@ -43,6 +39,14 @@ def main():
         'PASSED' if r['success'] else 'FAILED', r['message']
     ))
 
+    if not faxId:
+        print('Skipping test 4 because test 1 failed.')
+    else:
+        print('Get fax status')
+        r = api.faxStatus(id = faxId)
+        print('Test %s: %s\n' % (
+            'PASSED' if r['success'] else 'FAILED', r['message']
+        ))
 
 if __name__ == '__main__':
     main()
