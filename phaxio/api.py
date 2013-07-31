@@ -44,6 +44,7 @@ class PhaxioApi(object):
             if isinstance(f, basestring):
                 req_files['filename[%d]' % file_i] = open(f, 'rb')
             else:
+                f.seek(0)
                 req_files['filename[%d]' % file_i] = f
 
         url = '%s/v%d/%s' % (self.BASE_URL, self.VERSION, method)
