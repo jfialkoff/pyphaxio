@@ -29,7 +29,7 @@ files:
     f = open(alpaca, 'rb')
     r = api.send(to='4141234567', files=(llama, f))
 
-See the [manual tests](phaxio/test/manual.py) for additional examples.
+See the [manual tests](phaxio/tests/manual.py) for additional examples.
 
 ### Currently Supported API Calls
 
