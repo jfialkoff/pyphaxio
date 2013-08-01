@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
 
-    name = "PyPhaxio",
+    name = "pyphaxio",
 
     version = '0.8',
 

@@ -37,6 +37,3 @@ nosetests.xml
 # Vim
 *.swp
 *.swo
-
-# PyPi
-.pypirc
