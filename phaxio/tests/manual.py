@@ -2,6 +2,11 @@ import os
 
 from phaxio import PhaxioApi
 
+try:
+    raw_input
+except NameError:
+    raw_input = input
+
 def main():
 
     print('This function will attempt to communicate with Phaxio to run \n'

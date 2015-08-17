@@ -1,8 +1,13 @@
+import collections
 import io
 import requests
-import urllib
 
 from .utils import curry
+
+try:
+    basestring
+except NameError:
+    basestring = str
 
 class PhaxioApi(object):
     VERSION = 1
@@ -51,7 +56,7 @@ class PhaxioApi(object):
 
         url = '%s/v%d/%s' % (self.BASE_URL, self.VERSION, method)
         r = requests.post(url, data = payload, files = req_files)
-        if callable(r.json):
+        if isinstance(r.json, collections.Callable):
             return r.json()
         else:
             # json isn't callable in old versions of requests
