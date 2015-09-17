@@ -1,5 +1,4 @@
 import collections
-import io
 import requests
 
 from .utils import curry
