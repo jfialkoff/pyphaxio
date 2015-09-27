@@ -1,8 +1,8 @@
 import collections
-import io
 import requests
 
 from .utils import curry
+from .exceptions import AuthenticationError, APIError, ServerError
 
 try:
     basestring
@@ -21,12 +21,49 @@ class PhaxioApi(object):
     api_key = None
     api_secret = None
 
-    def __init__(self, key, secret):
+    def __init__(self, key, secret, raise_errors=False):
+        """Construct a Phaxio API object
+
+        :param key: Phaxio api key
+        :param secret: Phaxio api secret
+        :param raise_errors: If set to False (default)
+            an api call will return the json response
+            as it did previously. If set to True, an api
+            call will now raise an appropriate error.
+        """
         self.api_key = key
         self.api_secret = secret
+        self._raise_errors = raise_errors
+
+    def parse_response(self, response):
+        """Parses the API response and raises appropriate
+        errors if raise_errors was set to True
+
+        :param response: response from requests http call
+        :returns: dictionary of response
+        :rtype: dict
+        """
+        payload = None
+        if isinstance(response.json, collections.Callable):
+            payload = response.json()
+        else:
+            # json isn't callable in old versions of requests
+            payload = response.json
+
+        if not self._raise_errors:
+            return payload
+        else:
+            if response.status_code == 401:
+                raise AuthenticationError(payload['message'])
+            elif response.status_code == 500:
+                raise ServerError(payload['message'])
+            elif not payload['success']:
+                raise APIError(payload['message'])
+            else:
+                return payload
 
     def _get(self, method, **kwargs):
-        """ Builds the url for the specified method and arguments and returns
+        """Builds the url for the specified method and arguments and returns
         the response as a dictionary.
         """
 
@@ -55,16 +92,12 @@ class PhaxioApi(object):
                 req_files['filename[%d]' % file_i] = f
 
         url = '%s/v%d/%s' % (self.BASE_URL, self.VERSION, method)
-        r = requests.post(url, data = payload, files = req_files)
-        if isinstance(r.json, collections.Callable):
-            return r.json()
-        else:
-            # json isn't callable in old versions of requests
-            return r.json
+
+        r = requests.post(url, data=payload, files=req_files)
+
+        return self.parse_response(r)
 
     def __getattribute__(self, name):
         if name in PhaxioApi.__IMPLEMENTED:
             return curry(self._get, name)
         return super(PhaxioApi, self).__getattribute__(name)
-
-
