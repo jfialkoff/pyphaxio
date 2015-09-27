@@ -42,7 +42,7 @@ By default, the api calls return a dictionary. However, you can use
 * `APIError` - error with api call
 * `ServerError` - server had an error and could not complete your request
 
-Errors can be imported from the `phaxio.errors` module.
+Errors can be imported from the `phaxio.exceptions` module.
 
 ### Currently Supported API Calls
 

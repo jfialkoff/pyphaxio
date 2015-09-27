@@ -2,7 +2,7 @@ import collections
 import requests
 
 from .utils import curry
-from .errors import AuthenticationError, APIError, ServerError
+from .exceptions import AuthenticationError, APIError, ServerError
 
 try:
     basestring

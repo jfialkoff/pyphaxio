@@ -2,7 +2,7 @@ import time
 import unittest
 
 from phaxio import PhaxioApi
-from phaxio.errors import AuthenticationError, APIError
+from phaxio.exceptions import AuthenticationError, APIError
 
 try:
     raw_input
