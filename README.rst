@@ -1,6 +1,8 @@
 Phaxio
 ======
 
+|PyPI| |GitHub license|
+
 A Python module for interacting with the `Phaxio API`_.
 
 Installation
@@ -96,3 +98,7 @@ Contributing
 .. _Phaxio API: https://www.phaxio.com/docs
 .. _documentation: https://www.phaxio.com/docs
 .. _tests: tests/test_api.py
+.. |PyPI| image:: https://img.shields.io/pypi/v/pyphaxio.svg
+    :target: https://pypi.python.org/pypi/pyphaxio
+.. |GitHub license| image:: https://img.shields.io/badge/license-MIT-blue.svg
+    :target: https://github.com/jfialkoff/pyphaxio/blob/master/LICENSE
