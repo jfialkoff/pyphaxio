@@ -61,6 +61,7 @@ Implemented and tested:
 -  send
 -  testReceive
 -  faxStatus
+-  faxFile
 
 Implemented and untested:
 
@@ -70,7 +71,6 @@ Implemented and untested:
 -  provisionNumber
 -  releaseNumber
 -  numberList
--  faxFile
 -  faxList
 -  faxCancel
 -  accountStatus
