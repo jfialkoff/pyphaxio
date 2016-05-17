@@ -66,10 +66,24 @@ class APITestCase(unittest.TestCase):
             string_data_type='text'
         )
         fax_id = r.get('faxId')
+        time.sleep(1)  # due to rate limiting
 
         r = self.api.faxStatus(id=fax_id)
-
         self.assertTrue(r['success'])
+
+    def test_fax_file(self):
+        r = self.api.send(
+            to='4147654321',
+            string_data='Hello World!',
+            string_data_type='text'
+        )
+        fax_id = r.get('faxId')
+
+        # have to wait for Phaxio to process file
+        time.sleep(3)
+
+        r = self.api.faxFile(id=fax_id)
+        self.assertIsNotNone(r)
 
 if __name__ == '__main__':
     unittest.main()

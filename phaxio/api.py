@@ -44,11 +44,15 @@ class PhaxioApi(object):
         :rtype: dict
         """
         payload = None
-        if isinstance(response.json, collections.Callable):
-            payload = response.json()
-        else:
-            # json isn't callable in old versions of requests
-            payload = response.json
+        try:
+            if isinstance(response.json, collections.Callable):
+                payload = response.json()
+            else:
+                # json isn't callable in old versions of requests
+                payload = response.json
+        except ValueError:
+            # response does not have JSON content
+            payload = response.content
 
         if not self._raise_errors:
             return payload
@@ -57,7 +61,7 @@ class PhaxioApi(object):
                 raise AuthenticationError(payload['message'])
             elif response.status_code == 500:
                 raise ServerError(payload['message'])
-            elif not payload['success']:
+            elif isinstance(payload, dict) and not payload['success']:
                 raise APIError(payload['message'])
             else:
                 return payload
