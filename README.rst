@@ -1,5 +1,7 @@
-Phaxio
-======
+Phaxio (inactive)
+======================
+Please see the current and maintained repository: https://github.com/anpolsky/phaxio-python
+
 
 |PyPI| |GitHub license|
 
